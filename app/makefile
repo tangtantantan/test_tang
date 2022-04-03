@@ -1,4 +1,10 @@
-all: start.o led.o 
+
+APP_SRC:=
+
+
+
+
+app: start.o led.o 
 	arm-none-eabi-ld -Tled.lds  $^ -o led.elf
 	arm-none-eabi-objcopy -O binary -S -g led.elf led.bin
 	
