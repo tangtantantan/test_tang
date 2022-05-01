@@ -258,6 +258,7 @@ __attribute__(( used )) const uint32_t ulMaxAPIPriorityMask = ( configMAX_API_CA
 /*
  * See header file for description.
  */
+//创建任务就是伪造一个现场
 StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters )
 {
 	/* Setup the initial stack of the task.  The stack is set exactly as
@@ -277,12 +278,13 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 	if( ( ( uint32_t ) pxCode & portTHUMB_MODE_ADDRESS ) != 0x00UL )
 	{
 		/* The task will start in THUMB mode. */
-		*pxTopOfStack |= portTHUMB_MODE_BIT;
+		*pxTopOfStack |= portTHUMB_MODE_BIT;//0010   0000
 	}
 
 	pxTopOfStack--;
 
 	/* Next the return address, which in this case is the start of the task. */
+	/* 这个填写任务函数地址 */
 	*pxTopOfStack = ( StackType_t ) pxCode;
 	pxTopOfStack--;
 
